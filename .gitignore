@@ -1,0 +1,14 @@
+# Ignore all 
+* 
+# Unignore all with extensions *.vhd  *.gitignore *.xpr *.wcfg
+!*.vhd 
+!*.v
+!*.xlsx
+!*.xpr
+!*.wcfg
+!*.pdf
+!*.jpg
+!*.coe
+!.gitignore
+!*/
+!*.PNG
