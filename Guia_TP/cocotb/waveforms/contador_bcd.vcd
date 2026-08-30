@@ -1,0 +1,1288 @@
+$date
+  Sun Aug 30 19:25:10 2026
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 ps
+$end
+$scope module standard $end
+$upscope $end
+$scope module textio $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module contador_bcd $end
+$var reg 1 ! ena $end
+$var reg 1 " rst $end
+$var reg 1 # clk $end
+$var reg 4 $ q[3:0] $end
+$var reg 1 % co $end
+$var reg 4 & d_reg[3:0] $end
+$var reg 4 ' q_reg[3:0] $end
+$var reg 4 ( q_inc[3:0] $end
+$var reg 1 ) igual9 $end
+$var reg 1 * co_aux $end
+$scope module adder_instance $end
+$var reg 1 + ci $end
+$var reg 4 , a[3:0] $end
+$var reg 4 - b[3:0] $end
+$var reg 4 . s[3:0] $end
+$var reg 1 / co $end
+$var reg 5 0 c_vector[4:0] $end
+$scope module ciclo(0) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 1 ci $end
+$var reg 1 2 a $end
+$var reg 1 3 b $end
+$var reg 1 4 s $end
+$var reg 1 5 co $end
+$upscope $end
+$upscope $end
+$scope module ciclo(1) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 6 ci $end
+$var reg 1 7 a $end
+$var reg 1 8 b $end
+$var reg 1 9 s $end
+$var reg 1 : co $end
+$upscope $end
+$upscope $end
+$scope module ciclo(2) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 ; ci $end
+$var reg 1 < a $end
+$var reg 1 = b $end
+$var reg 1 > s $end
+$var reg 1 ? co $end
+$upscope $end
+$upscope $end
+$scope module ciclo(3) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 @ ci $end
+$var reg 1 A a $end
+$var reg 1 B b $end
+$var reg 1 C s $end
+$var reg 1 D co $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module comparador_instance $end
+$var reg 4 E a[3:0] $end
+$var reg 4 F b[3:0] $end
+$var reg 1 G igual $end
+$upscope $end
+$scope module mux_bcd(0) $end
+$scope module mux_instance $end
+$var reg 1 H a $end
+$var reg 1 I b $end
+$var reg 1 J sel $end
+$var reg 1 K mux $end
+$upscope $end
+$upscope $end
+$scope module mux_bcd(1) $end
+$scope module mux_instance $end
+$var reg 1 L a $end
+$var reg 1 M b $end
+$var reg 1 N sel $end
+$var reg 1 O mux $end
+$upscope $end
+$upscope $end
+$scope module mux_bcd(2) $end
+$scope module mux_instance $end
+$var reg 1 P a $end
+$var reg 1 Q b $end
+$var reg 1 R sel $end
+$var reg 1 S mux $end
+$upscope $end
+$upscope $end
+$scope module mux_bcd(3) $end
+$scope module mux_instance $end
+$var reg 1 T a $end
+$var reg 1 U b $end
+$var reg 1 V sel $end
+$var reg 1 W mux $end
+$upscope $end
+$upscope $end
+$scope module registro_instance $end
+$var reg 4 X d[3:0] $end
+$var reg 1 Y ena $end
+$var reg 1 Z rst $end
+$var reg 1 [ clk $end
+$var reg 4 \ q[3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+1"
+1#
+bUUUU $
+0%
+bUUUU &
+bUUUU '
+bUUUU (
+0)
+U*
+0+
+bUUUU ,
+b0001 -
+bUUUU .
+U/
+bUUUU0 0
+01
+U2
+13
+U4
+U5
+U6
+U7
+08
+U9
+U:
+U;
+U<
+0=
+U>
+U?
+U@
+UA
+0B
+UC
+UD
+bUUUU E
+b1001 F
+0G
+UH
+0I
+0J
+UK
+UL
+0M
+0N
+UO
+UP
+0Q
+0R
+US
+UT
+0U
+0V
+UW
+bUUUU X
+0Y
+1Z
+1[
+bUUUU \
+#5000
+0#
+0[
+#10000
+1#
+b0000 $
+b0001 &
+b0000 '
+b0001 (
+0*
+b0000 ,
+b0001 .
+0/
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+0<
+0>
+0?
+0@
+0A
+0C
+0D
+b0000 E
+1H
+1K
+0L
+0O
+0P
+0S
+0T
+0W
+b0001 X
+1[
+b0000 \
+#15000
+0#
+0[
+#20000
+1#
+1[
+#25000
+0#
+0[
+#30000
+1#
+1[
+#35000
+0#
+0[
+#40000
+1#
+1[
+#41000
+0"
+0Z
+#42000
+#45000
+0#
+0[
+#50000
+1#
+1[
+#51000
+1!
+1Y
+#55000
+0#
+0[
+#60000
+1#
+b0001 $
+b0010 &
+b0001 '
+b0010 (
+b0001 ,
+b0010 .
+b00010 0
+12
+04
+15
+16
+19
+b0001 E
+0H
+0K
+1L
+1O
+b0010 X
+1[
+b0001 \
+#61000
+#65000
+0#
+0[
+#70000
+1#
+b0010 $
+b0011 &
+b0010 '
+b0011 (
+b0010 ,
+b0011 .
+b00000 0
+02
+14
+05
+06
+17
+19
+0:
+0;
+0>
+b0010 E
+1H
+1K
+1L
+1O
+0P
+0S
+b0011 X
+1[
+b0010 \
+#71000
+#75000
+0#
+0[
+#80000
+1#
+b0011 $
+b0100 &
+b0011 '
+b0100 (
+b0011 ,
+b0100 .
+b00110 0
+12
+04
+15
+16
+09
+1:
+1;
+1>
+b0011 E
+0H
+0K
+0L
+0O
+1P
+1S
+b0100 X
+1[
+b0011 \
+#81000
+#85000
+0#
+0[
+#90000
+1#
+b0100 $
+b0101 &
+b0100 '
+b0101 (
+b0100 ,
+b0101 .
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+1<
+1>
+0?
+0@
+0C
+b0100 E
+1H
+1K
+0L
+0O
+1P
+1S
+0T
+0W
+b0101 X
+1[
+b0100 \
+#91000
+#95000
+0#
+0[
+#100000
+1#
+b0101 $
+b0110 &
+b0101 '
+b0110 (
+b0101 ,
+b0110 .
+b00010 0
+12
+04
+15
+16
+19
+b0101 E
+0H
+0K
+1L
+1O
+b0110 X
+1[
+b0101 \
+#101000
+#105000
+0#
+0[
+#110000
+1#
+b0110 $
+b0111 &
+b0110 '
+b0111 (
+b0110 ,
+b0111 .
+b00000 0
+02
+14
+05
+06
+17
+19
+0:
+0;
+1>
+0?
+0@
+0C
+b0110 E
+1H
+1K
+1L
+1O
+1P
+1S
+0T
+0W
+b0111 X
+1[
+b0110 \
+#111000
+#115000
+0#
+0[
+#120000
+1#
+b0111 $
+b1000 &
+b0111 '
+b1000 (
+b0111 ,
+b1000 .
+b01110 0
+12
+04
+15
+16
+09
+1:
+1;
+0>
+1?
+1@
+1C
+b0111 E
+0H
+0K
+0L
+0O
+0P
+0S
+1T
+1W
+b1000 X
+1[
+b0111 \
+#121000
+#125000
+0#
+0[
+#130000
+1#
+b1000 $
+b1001 &
+b1000 '
+b1001 (
+0*
+b1000 ,
+b1001 .
+0/
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+0<
+0>
+0?
+0@
+1A
+1C
+0D
+b1000 E
+1H
+1K
+0L
+0O
+0P
+0S
+1T
+1W
+b1001 X
+1[
+b1000 \
+#131000
+#135000
+0#
+0[
+#140000
+1#
+b1001 $
+1%
+b0000 &
+b1001 '
+b1010 (
+1)
+b1001 ,
+b1010 .
+b00010 0
+12
+04
+15
+16
+19
+b1001 E
+1G
+0H
+1J
+0K
+1L
+1N
+1R
+1V
+0W
+b0000 X
+1[
+b1001 \
+#141000
+#145000
+0#
+0[
+#150000
+1#
+b0000 $
+0%
+b0001 &
+b0000 '
+b0001 (
+0)
+b0000 ,
+b0001 .
+b00000 0
+02
+14
+05
+06
+09
+0A
+0C
+b0000 E
+0G
+1H
+0J
+1K
+0L
+0N
+0O
+0R
+0T
+0V
+b0001 X
+1[
+b0000 \
+#151000
+#155000
+0#
+0[
+#160000
+1#
+b0001 $
+b0010 &
+b0001 '
+b0010 (
+b0001 ,
+b0010 .
+b00010 0
+12
+04
+15
+16
+19
+b0001 E
+0H
+0K
+1L
+1O
+b0010 X
+1[
+b0001 \
+#161000
+#165000
+0#
+0[
+#170000
+1#
+b0010 $
+b0011 &
+b0010 '
+b0011 (
+b0010 ,
+b0011 .
+b00000 0
+02
+14
+05
+06
+17
+19
+0:
+0;
+0>
+b0010 E
+1H
+1K
+1L
+1O
+0P
+0S
+b0011 X
+1[
+b0010 \
+#171000
+#175000
+0#
+0[
+#180000
+1#
+b0011 $
+b0100 &
+b0011 '
+b0100 (
+b0011 ,
+b0100 .
+b00110 0
+12
+04
+15
+16
+09
+1:
+1;
+1>
+b0011 E
+0H
+0K
+0L
+0O
+1P
+1S
+b0100 X
+1[
+b0011 \
+#181000
+#185000
+0#
+0[
+#190000
+1#
+b0100 $
+b0101 &
+b0100 '
+b0101 (
+b0100 ,
+b0101 .
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+1<
+1>
+0?
+0@
+0C
+b0100 E
+1H
+1K
+0L
+0O
+1P
+1S
+0T
+0W
+b0101 X
+1[
+b0100 \
+#191000
+#195000
+0#
+0[
+#200000
+1#
+b0101 $
+b0110 &
+b0101 '
+b0110 (
+b0101 ,
+b0110 .
+b00010 0
+12
+04
+15
+16
+19
+b0101 E
+0H
+0K
+1L
+1O
+b0110 X
+1[
+b0101 \
+#201000
+#205000
+0#
+0[
+#210000
+1#
+b0110 $
+b0111 &
+b0110 '
+b0111 (
+b0110 ,
+b0111 .
+b00000 0
+02
+14
+05
+06
+17
+19
+0:
+0;
+1>
+0?
+0@
+0C
+b0110 E
+1H
+1K
+1L
+1O
+1P
+1S
+0T
+0W
+b0111 X
+1[
+b0110 \
+#211000
+#215000
+0#
+0[
+#220000
+1#
+b0111 $
+b1000 &
+b0111 '
+b1000 (
+b0111 ,
+b1000 .
+b01110 0
+12
+04
+15
+16
+09
+1:
+1;
+0>
+1?
+1@
+1C
+b0111 E
+0H
+0K
+0L
+0O
+0P
+0S
+1T
+1W
+b1000 X
+1[
+b0111 \
+#221000
+#225000
+0#
+0[
+#230000
+1#
+b1000 $
+b1001 &
+b1000 '
+b1001 (
+0*
+b1000 ,
+b1001 .
+0/
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+0<
+0>
+0?
+0@
+1A
+1C
+0D
+b1000 E
+1H
+1K
+0L
+0O
+0P
+0S
+1T
+1W
+b1001 X
+1[
+b1000 \
+#231000
+#235000
+0#
+0[
+#240000
+1#
+b1001 $
+1%
+b0000 &
+b1001 '
+b1010 (
+1)
+b1001 ,
+b1010 .
+b00010 0
+12
+04
+15
+16
+19
+b1001 E
+1G
+0H
+1J
+0K
+1L
+1N
+1R
+1V
+0W
+b0000 X
+1[
+b1001 \
+#241000
+#245000
+0#
+0[
+#250000
+1#
+b0000 $
+0%
+b0001 &
+b0000 '
+b0001 (
+0)
+b0000 ,
+b0001 .
+b00000 0
+02
+14
+05
+06
+09
+0A
+0C
+b0000 E
+0G
+1H
+0J
+1K
+0L
+0N
+0O
+0R
+0T
+0V
+b0001 X
+1[
+b0000 \
+#251000
+0!
+0Y
+#255000
+0#
+0[
+#260000
+1#
+1[
+#261000
+1!
+1Y
+#265000
+0#
+0[
+#270000
+1#
+b0001 $
+b0010 &
+b0001 '
+b0010 (
+b0001 ,
+b0010 .
+b00010 0
+12
+04
+15
+16
+19
+b0001 E
+0H
+0K
+1L
+1O
+b0010 X
+1[
+b0001 \
+#271000
+#275000
+0#
+0[
+#280000
+1#
+b0010 $
+b0011 &
+b0010 '
+b0011 (
+b0010 ,
+b0011 .
+b00000 0
+02
+14
+05
+06
+17
+19
+0:
+0;
+0>
+b0010 E
+1H
+1K
+1L
+1O
+0P
+0S
+b0011 X
+1[
+b0010 \
+#285000
+0#
+0[
+#290000
+1#
+b0011 $
+b0100 &
+b0011 '
+b0100 (
+b0011 ,
+b0100 .
+b00110 0
+12
+04
+15
+16
+09
+1:
+1;
+1>
+b0011 E
+0H
+0K
+0L
+0O
+1P
+1S
+b0100 X
+1[
+b0011 \
+#295000
+0#
+0[
+#300000
+1#
+b0100 $
+b0101 &
+b0100 '
+b0101 (
+b0100 ,
+b0101 .
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+1<
+1>
+0?
+0@
+0C
+b0100 E
+1H
+1K
+0L
+0O
+1P
+1S
+0T
+0W
+b0101 X
+1[
+b0100 \
+#305000
+0#
+0[
+#310000
+1#
+b0101 $
+b0110 &
+b0101 '
+b0110 (
+b0101 ,
+b0110 .
+b00010 0
+12
+04
+15
+16
+19
+b0101 E
+0H
+0K
+1L
+1O
+b0110 X
+1[
+b0101 \
+#315000
+0#
+0[
+#320000
+1#
+b0110 $
+b0111 &
+b0110 '
+b0111 (
+b0110 ,
+b0111 .
+b00000 0
+02
+14
+05
+06
+17
+19
+0:
+0;
+1>
+0?
+0@
+0C
+b0110 E
+1H
+1K
+1L
+1O
+1P
+1S
+0T
+0W
+b0111 X
+1[
+b0110 \
+#325000
+0#
+0[
+#330000
+1#
+b0111 $
+b1000 &
+b0111 '
+b1000 (
+b0111 ,
+b1000 .
+b01110 0
+12
+04
+15
+16
+09
+1:
+1;
+0>
+1?
+1@
+1C
+b0111 E
+0H
+0K
+0L
+0O
+0P
+0S
+1T
+1W
+b1000 X
+1[
+b0111 \
+#335000
+0#
+0[
+#340000
+1#
+b1000 $
+b1001 &
+b1000 '
+b1001 (
+0*
+b1000 ,
+b1001 .
+0/
+b00000 0
+02
+14
+05
+06
+07
+09
+0:
+0;
+0<
+0>
+0?
+0@
+1A
+1C
+0D
+b1000 E
+1H
+1K
+0L
+0O
+0P
+0S
+1T
+1W
+b1001 X
+1[
+b1000 \
+#345000
+0#
+0[
+#350000
+1#
+b1001 $
+1%
+b0000 &
+b1001 '
+b1010 (
+1)
+b1001 ,
+b1010 .
+b00010 0
+12
+04
+15
+16
+19
+b1001 E
+1G
+0H
+1J
+0K
+1L
+1N
+1R
+1V
+0W
+b0000 X
+1[
+b1001 \
+#355000
+0#
+0[
+#360000
+1#
+b0000 $
+0%
+b0001 &
+b0000 '
+b0001 (
+0)
+b0000 ,
+b0001 .
+b00000 0
+02
+14
+05
+06
+09
+0A
+0C
+b0000 E
+0G
+1H
+0J
+1K
+0L
+0N
+0O
+0R
+0T
+0V
+b0001 X
+1[
+b0000 \
+#365000
+0#
+0[
+#370000
+1#
+b0001 $
+b0010 &
+b0001 '
+b0010 (
+b0001 ,
+b0010 .
+b00010 0
+12
+04
+15
+16
+19
+b0001 E
+0H
+0K
+1L
+1O
+b0010 X
+1[
+b0001 \
+#371000

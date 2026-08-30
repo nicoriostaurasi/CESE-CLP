@@ -1,6 +1,7 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
+from cocotb_helpers import grace_period
 
 
 CLK_PERIOD_NS = 10
@@ -47,3 +48,4 @@ async def test_contador_bcd_1_seg(dut):
     dut.ena.value = 1
     await wait_clock_cycles(dut, SYS_CLK_SIM)
     assert int(dut.q.value) == 3, "El contador no reanudo desde el valor retenido"
+    await grace_period()
