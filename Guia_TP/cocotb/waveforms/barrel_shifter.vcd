@@ -1,0 +1,50 @@
+$date
+  Sun Aug 30 19:24:50 2026
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 ps
+$end
+$scope module standard $end
+$upscope $end
+$scope module textio $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module numeric_std $end
+$upscope $end
+$scope module barrel_shifter $end
+$var reg 8 ! a[7:0] $end
+$var reg 3 " des[2:0] $end
+$var reg 8 # s[7:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+b10110101 !
+b000 "
+b10110101 #
+#10000
+b001 "
+b01011010 #
+#20000
+b010 "
+b00101101 #
+#30000
+b011 "
+b00010110 #
+#40000
+b100 "
+b00001011 #
+#50000
+b101 "
+b00000101 #
+#60000
+b110 "
+b00000010 #
+#70000
+b111 "
+b00000001 #
+#80000
+#180000

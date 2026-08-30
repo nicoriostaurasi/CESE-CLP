@@ -7,8 +7,21 @@
 !*.xpr
 !*.wcfg
 !*.pdf
+!*.py
+!*.md
+!*.txt
+!*.yml
+!*.yaml
+!*.vcd
+!Makefile
+!Dockerfile
+
 !*.jpg
 !*.coe
 !.gitignore
 !*/
 !*.PNG
+
+# Keep generated Vivado caches out even though extension rules above are broad.
+Guia_TP/CLP_CESE/CLP_CESE.ip_user_files/
+Guia_TP/CLP_CESE/CLP_CESE.sim/

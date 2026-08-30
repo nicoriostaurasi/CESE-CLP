@@ -1,0 +1,52 @@
+$date
+  Sun Aug 30 19:26:08 2026
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 ps
+$end
+$scope module standard $end
+$upscope $end
+$scope module textio $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module mux_2_a_1 $end
+$var reg 1 ! a $end
+$var reg 1 " b $end
+$var reg 1 # sel $end
+$var reg 1 $ mux $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+0"
+0#
+0$
+#10000
+1"
+#20000
+1!
+0"
+1$
+#30000
+1"
+#40000
+0!
+0"
+1#
+0$
+#50000
+1"
+1$
+#60000
+1!
+0"
+0$
+#70000
+1"
+1$
+#80000
+#180000

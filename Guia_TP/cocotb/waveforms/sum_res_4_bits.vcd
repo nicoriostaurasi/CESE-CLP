@@ -1,0 +1,411 @@
+$date
+  Sun Aug 30 19:26:28 2026
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 ps
+$end
+$scope module standard $end
+$upscope $end
+$scope module textio $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module sum_res_4_bits $end
+$var reg 1 ! sr $end
+$var reg 4 " a[3:0] $end
+$var reg 4 # b[3:0] $end
+$var reg 4 $ s[3:0] $end
+$var reg 1 % co $end
+$var reg 4 & b_sum_res[3:0] $end
+$var reg 1 ' ci_sum_res $end
+$scope module adder_4_bits_instance $end
+$var reg 1 ( ci $end
+$var reg 4 ) a[3:0] $end
+$var reg 4 * b[3:0] $end
+$var reg 4 + s[3:0] $end
+$var reg 1 , co $end
+$var reg 5 - c_vector[4:0] $end
+$scope module ciclo(0) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 . ci $end
+$var reg 1 / a $end
+$var reg 1 0 b $end
+$var reg 1 1 s $end
+$var reg 1 2 co $end
+$upscope $end
+$upscope $end
+$scope module ciclo(1) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 3 ci $end
+$var reg 1 4 a $end
+$var reg 1 5 b $end
+$var reg 1 6 s $end
+$var reg 1 7 co $end
+$upscope $end
+$upscope $end
+$scope module ciclo(2) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 8 ci $end
+$var reg 1 9 a $end
+$var reg 1 : b $end
+$var reg 1 ; s $end
+$var reg 1 < co $end
+$upscope $end
+$upscope $end
+$scope module ciclo(3) $end
+$scope module adder_1_bit_instance $end
+$var reg 1 = ci $end
+$var reg 1 > a $end
+$var reg 1 ? b $end
+$var reg 1 @ s $end
+$var reg 1 A co $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+b0000 "
+b0000 #
+b0000 $
+0%
+b0000 &
+0'
+0(
+b0000 )
+b0000 *
+b0000 +
+0,
+b00000 -
+0.
+0/
+00
+01
+02
+03
+04
+05
+06
+07
+08
+09
+0:
+0;
+0<
+0=
+0>
+0?
+0@
+0A
+#10000
+b0001 "
+b0001 #
+b0010 $
+b0001 &
+b0001 )
+b0001 *
+b0010 +
+b00010 -
+1/
+10
+01
+12
+13
+16
+#20000
+b0101 "
+b0011 #
+b1000 $
+b0011 &
+b0101 )
+b0011 *
+b1000 +
+b01110 -
+15
+06
+17
+18
+19
+0;
+1<
+1=
+1@
+#30000
+b0111 "
+b1000 #
+b1111 $
+0%
+b1000 &
+b0111 )
+b1000 *
+b1111 +
+0,
+b00000 -
+00
+11
+02
+03
+14
+05
+16
+07
+08
+1;
+0<
+0=
+1?
+1@
+0A
+#40000
+b1111 "
+b0000 #
+b1111 $
+0%
+b0000 &
+b1111 )
+b0000 *
+b1111 +
+0,
+b00000 -
+1>
+0?
+1@
+0A
+#50000
+b0001 #
+b0000 $
+1%
+b0001 &
+b0001 *
+b0000 +
+1,
+b11110 -
+10
+01
+12
+13
+06
+17
+18
+0;
+1<
+1=
+0@
+1A
+#60000
+b1001 "
+b1001 #
+b0010 $
+b1001 &
+b1001 )
+b1001 *
+b0010 +
+b10010 -
+04
+16
+07
+08
+09
+0;
+0<
+0=
+1?
+#70000
+b1111 "
+b1111 #
+b1110 $
+b1111 &
+b1111 )
+b1111 *
+b1110 +
+b11110 -
+14
+15
+16
+17
+18
+19
+1:
+1;
+1<
+1=
+1@
+#80000
+1!
+b0000 "
+b0000 #
+b0000 $
+1%
+1'
+1(
+b0000 )
+b0000 +
+1,
+b11111 -
+1.
+0/
+01
+12
+13
+04
+06
+17
+18
+09
+0;
+1<
+1=
+0>
+0@
+1A
+#90000
+b0111 "
+b0011 #
+b0100 $
+b1100 &
+b0111 )
+b1100 *
+b0100 +
+1/
+00
+01
+14
+05
+06
+19
+1;
+#100000
+b1111 "
+b0001 #
+b1110 $
+b1110 &
+b1111 )
+b1110 *
+b1110 +
+15
+16
+1>
+1@
+#110000
+b1000 "
+b1000 #
+b0000 $
+1%
+b0111 &
+b1000 )
+b0111 *
+b0000 +
+1,
+b11111 -
+0/
+10
+01
+12
+13
+04
+06
+17
+18
+09
+0;
+1<
+1=
+0?
+0@
+1A
+#120000
+b0011 "
+b0101 #
+b1110 $
+0%
+b1010 &
+b0011 )
+b1010 *
+b1110 +
+0,
+b00111 -
+1/
+00
+01
+14
+16
+0:
+1;
+0<
+0=
+0>
+1?
+1@
+0A
+#130000
+b0000 "
+b0001 #
+b1111 $
+0%
+b1110 &
+b0000 )
+b1110 *
+b1111 +
+0,
+b00001 -
+0/
+11
+02
+03
+04
+16
+07
+08
+1:
+1;
+0<
+0=
+1@
+0A
+#140000
+b0010 "
+b1001 #
+b1001 $
+b0110 &
+b0010 )
+b0110 *
+b1001 +
+b01101 -
+14
+06
+17
+18
+0;
+1<
+1=
+0?
+1@
+#150000
+b1111 "
+b0000 #
+b1111 $
+1%
+b1111 &
+b1111 )
+b1111 *
+b1111 +
+1,
+b11111 -
+1/
+10
+11
+12
+13
+16
+19
+1;
+1>
+1?
+1@
+1A
+#160000
+#260000
