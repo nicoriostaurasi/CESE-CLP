@@ -1,0 +1,7 @@
+services:
+  cocotb:
+    build:
+      context: .
+    working_dir: /work/Guia_TP/cocotb
+    volumes:
+      - ../..:/work
