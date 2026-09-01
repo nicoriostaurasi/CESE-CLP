@@ -1,0 +1,1 @@
+--incr --debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "secureip" --snapshot "spi_pin_driver_tb_behav" "xil_defaultlib.spi_pin_driver_tb" -log "elaborate.log" 
