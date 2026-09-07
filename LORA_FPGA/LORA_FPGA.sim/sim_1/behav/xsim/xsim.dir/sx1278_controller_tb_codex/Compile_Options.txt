@@ -1,0 +1,1 @@
+--debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "secureip" --snapshot "sx1278_controller_tb_codex" "xil_defaultlib.sx1278_controller_tb" -log "elaborate_codex.log" 

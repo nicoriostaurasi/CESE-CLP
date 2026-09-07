@@ -94,14 +94,17 @@ begin
     -- se prepara el siguiente dato MOSI.
     capture_data <= tc_spi_data_rate_2 when CPHA = '0' else tc_spi_data_rate;
     change_data  <= tc_spi_data_rate   when CPHA = '0' else tc_spi_data_rate_2;
-    next_mosi    <= tx_reg_data(1)     when CPHA = '0' else tx_reg_data(0);
-    start_mosi   <= tx_byte_i(0)       when CPHA = '0' else IDLE_VALUE;
+    -- SPI transmite el bit mas significativo primero. Para CPHA=0 el bit 7
+    -- queda presentado antes del primer flanco; para CPHA=1 se presenta en
+    -- el primer flanco de cambio.
+    next_mosi    <= tx_reg_data(6)     when CPHA = '0' else tx_reg_data(7);
+    start_mosi   <= tx_byte_i(7)       when CPHA = '0' else IDLE_VALUE;
     end_transfer <= '0' when busy_reg /= '1' else
                     '1' when (CPHA = '0' and data_counter = to_unsigned(DATA_SIZE-1,4)) or
                                   (CPHA = '1' and data_counter = to_unsigned(DATA_SIZE,4))
                     else '0';
     final_rx_data <= rx_reg_data when CPHA = '0'
-                     else spi_miso_i & rx_reg_data(8-1 downto 1);
+                     else rx_reg_data(8-2 downto 0) & spi_miso_i;
     
     -- Divide clk en un pulso de mitad de bit y otro de fin de bit.
     spi_data_rate_counter : process(clk)
@@ -155,12 +158,12 @@ begin
 
                 if change_data='1' then
                     mosi_reg<=next_mosi;
-                    tx_reg_data<=IDLE_VALUE & tx_reg_data(8-1 downto 1);
+                    tx_reg_data<=tx_reg_data(8-2 downto 0) & IDLE_VALUE;
                     data_counter<=data_counter+1;
                 end if;
 
                 if capture_data='1' then
-                    rx_reg_data<=spi_miso_i&rx_reg_data(8-1 downto 1);                
+                    rx_reg_data<=rx_reg_data(8-2 downto 0) & spi_miso_i;
                 end if;
 
                 -- El byte termina en el trailing edge. De esta manera CPHA=1
