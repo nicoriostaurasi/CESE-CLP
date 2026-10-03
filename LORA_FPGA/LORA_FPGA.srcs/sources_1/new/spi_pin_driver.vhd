@@ -42,18 +42,28 @@ entity spi_pin_driver is
         IDLE_VALUE  : std_logic := '1'
     );
     port (
+        -- Reloj principal utilizado para derivar SCLK.
         clk : in std_logic;
+        -- Reset sincrono del driver.
         rst : in std_logic;
         -- DATA INTERFACE
+        -- Byte que se serializa por MOSI, bit mas significativo primero.
         tx_byte_i : in  std_logic_vector(8-1 downto 0);
+        -- Byte capturado desde MISO.
         rx_byte_o : out std_logic_vector(8-1 downto 0);
         -- FLOW CONTROL
+        -- Pulso que inicia una transferencia de un byte.
         start_i   : in  std_logic;
+        -- Indica que la transferencia se encuentra activa.
         busy_o    : out std_logic;
+        -- Pulso generado al completar los ocho bits.
         done_o    : out std_logic;
         -- Phisical PINS
+        -- Reloj SPI con polaridad definida por CPOL.
         spi_sclk_o : out std_logic;
+        -- Linea de datos transmitidos.
         spi_mosi_o : out std_logic;
+        -- Linea de datos recibidos.
         spi_miso_i : in  std_logic
     );
 end spi_pin_driver;
@@ -151,7 +161,6 @@ begin
                     data_counter<=to_unsigned(0,4);
                     rx_reg_data<=(others=>'0');
                     busy_reg<= '1';
-                    done_reg<= '0';
                     enable_main_counter<='1';
                     rx_byte_o<=(others=>'0');
                 end if;
@@ -175,12 +184,6 @@ begin
                     rx_byte_o<=final_rx_data;
                     mosi_reg<=IDLE_VALUE;
                 end if;
-
-                
-                if enable_main_counter = '0' then
-                    done_reg<='0';
-                end if;
-        
             end if;                
         end if;
     end process;

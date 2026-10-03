@@ -41,43 +41,67 @@ generic (
     RAM_DEPTH  : integer := 512;
     CLK_FREQ_HZ : integer := 100_000_000;
     SPI_FREQ_HZ : integer := 5_000_000;
+    INTER_FRAME_DELAY_US : integer := 1;
     CPOL         : std_logic := '0';
     CPHA         : std_logic := '0';
     IDLE_VALUE   : std_logic := '1'
 );
 port (
+    -- Reloj principal.
     clk : in std_logic;
+    -- Reset sincrono de memorias, punteros y control.
     rst : in std_logic;
     -- Carga de la trama
+    -- Byte que se agrega a la memoria TX.
     byte_i      : in std_logic_vector(8-1 downto 0);
+    -- Pulso de escritura de byte_i.
     charge_byte : in std_logic;
     -- Control
+    -- Pulso que inicia la transferencia de los bytes cargados.
     start_spi_transfer : in std_logic;
+    -- Indica que el frame se encuentra en ejecucion.
     busy               : out std_logic;
+    -- Pulso generado al finalizar el frame completo.
     done               : out std_logic;
     -- Lectura de la memoria de recepcion
+    -- Pulso que avanza el puntero de lectura RX.
     rx_ram_read   : in  std_logic;
+    -- Indica que no quedan bytes RX por leer.
     rx_ram_empty  : out std_logic;
+    -- Byte presente en la salida de la memoria RX.
     rx_ram_data_o : out std_logic_vector(8-1 downto 0);
     -- Pines SPI
+    -- Reloj SPI hacia el periferico.
     spi_sclk_o : out std_logic;
+    -- Datos SPI hacia el periferico.
     spi_mosi_o : out std_logic;
+    -- Datos SPI desde el periferico.
     spi_miso_i : in  std_logic;
+    -- Seleccion SPI mantenida activa durante todo el frame.
     spi_nss_o  : out std_logic
 );
 end spi_frame_controller;
 
 architecture Behavioral of spi_frame_controller is
+    -- Este bloque no utiliza una MEF enumerada: el flujo se representa con
+    -- writing_flag e inter_frame_waiting. El diagrama equivalente se encuentra
+    -- en doc/diagrams/spi_frame_controller_flow.puml.
     -- Cantidad de bits necesaria para direccionar la RAM configurada.
     constant N_RAM_ADDR : integer := integer(ceil(log2(real(RAM_DEPTH))));
+    constant INTER_FRAME_DELAY_CYCLES : integer :=
+        (CLK_FREQ_HZ/1_000_000)*INTER_FRAME_DELAY_US;
+    constant N_INTER_FRAME_COUNTER : integer :=
+        integer(ceil(log2(real(INTER_FRAME_DELAY_CYCLES+1))));
 
-    -- Memoria y control de la trama a transmitir.
+    -- Memoria y control de la trama a transmitir. Se separan los punteros de
+    -- carga y lectura para poder preparar el frame antes de activar NSS.
     signal tx_wr_addr : unsigned(N_RAM_ADDR-1 downto 0);
     signal tx_rd_addr : unsigned(N_RAM_ADDR-1 downto 0);
     signal byte_data_counter : unsigned(N_RAM_ADDR-1 downto 0);
     signal tx_ram_data : std_logic_vector(8-1 downto 0);
 
-    -- Memoria y control de los bytes recibidos.
+    -- Memoria y control de los bytes recibidos. SPI es full-duplex, por lo que
+    -- se conserva un byte RX por cada byte TX aunque el acceso sea escritura.
     signal rx_wr_addr : unsigned(N_RAM_ADDR-1 downto 0);
     signal rx_rd_addr : unsigned(N_RAM_ADDR-1 downto 0);
     signal rx_data_counter : unsigned(N_RAM_ADDR-1 downto 0);
@@ -96,12 +120,16 @@ architecture Behavioral of spi_frame_controller is
     signal writing_flag : std_logic;
     signal start_frame : std_logic;
     signal frame_finished : std_logic;
+    signal inter_frame_waiting : std_logic;
+    signal inter_frame_counter : unsigned(N_INTER_FRAME_COUNTER-1 downto 0);
+    signal inter_frame_done : std_logic;
 
 begin
 
     -- Se acepta un inicio solamente si el controlador esta libre y hay al
     -- menos un byte cargado en la RAM TX.
     start_frame <= '1' when start_spi_transfer='1' and writing_flag='0' and
+                            inter_frame_waiting='0' and
                             byte_data_counter/=TO_UNSIGNED(0,N_RAM_ADDR)
                    else '0';
 
@@ -229,6 +257,36 @@ begin
         end if;
     end process;
 
+    -- Genera una pausa con NSS inactivo entre tramas completas. No introduce
+    -- huecos dentro de una trama: NSS permanece bajo mientras writing_flag=1.
+    inter_frame_delay : process(clk)
+    begin
+        if rising_edge(clk) then
+            if rst='1' then
+                inter_frame_waiting<='0';
+                inter_frame_counter<=TO_UNSIGNED(0,N_INTER_FRAME_COUNTER);
+                inter_frame_done<='0';
+            else
+                inter_frame_done<='0';
+
+                if frame_finished='1' then
+                    inter_frame_waiting<='1';
+                    inter_frame_counter<=TO_UNSIGNED(0,N_INTER_FRAME_COUNTER);
+                elsif inter_frame_waiting='1' then
+                    if inter_frame_counter=TO_UNSIGNED(INTER_FRAME_DELAY_CYCLES-1,
+                                                       N_INTER_FRAME_COUNTER) then
+                        inter_frame_waiting<='0';
+                        inter_frame_counter<=TO_UNSIGNED(0,N_INTER_FRAME_COUNTER);
+                        inter_frame_done<='1';
+                    else
+                        inter_frame_counter<=inter_frame_counter+
+                                             TO_UNSIGNED(1,N_INTER_FRAME_COUNTER);
+                    end if;
+                end if;
+            end if;
+        end if;
+    end process;
+
     -- Secuencia los pulsos start del driver y genera done al completar todos
     -- los bytes, manteniendo writing_flag activo durante la trama completa.
     frame_manager : process(clk)
@@ -247,9 +305,10 @@ begin
                     writing_flag<='1';
                 elsif frame_finished='1' then
                     writing_flag<='0';
-                    done<='1';
                 elsif writing_flag='1' and driver_done='1' then
                     driver_start_transfer<='1';
+                elsif inter_frame_done='1' then
+                    done<='1';
                 end if;
             end if;
         end if;
@@ -258,7 +317,7 @@ begin
     -- Conexiones combinacionales entre memorias, control e interfaz externa.
     driver_tx_data <= tx_ram_data;
     spi_nss_o <= not writing_flag;
-    busy <= writing_flag;
+    busy <= writing_flag or inter_frame_waiting;
 
     rx_ram_empty_reg <= '1' when rx_data_counter=TO_UNSIGNED(0,N_RAM_ADDR) else '0';
     rx_read_enable <= rx_ram_read when rx_ram_empty_reg='0' else '0';

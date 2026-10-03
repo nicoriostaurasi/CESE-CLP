@@ -1,0 +1,10 @@
+@startuml
+title MEF spi_sequence_controller
+
+[*] --> IDLE
+IDLE --> START_ACCESS : start_i
+START_ACCESS --> WAIT_ACCESS : access_start = 1
+WAIT_ACCESS --> START_ACCESS : access_done && step < last_step\nstep++
+WAIT_ACCESS --> DONE : access_done && step == last_step
+DONE --> IDLE : done_o = 1
+@enduml

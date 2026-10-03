@@ -9,10 +9,11 @@
 !*.pdf
 !*.py
 !*.md
-!*.txt
+!*.puml
 !*.yml
 !*.yaml
 !*.vcd
+!*.xdc
 !Makefile
 !Dockerfile
 

@@ -1,0 +1,24 @@
+@startuml
+title Flujo de spi_frame_controller
+
+[*] --> IDLE
+IDLE --> LOAD_TX : charge_byte\nalmacenar en RAM TX
+LOAD_TX --> LOAD_TX : charge_byte
+LOAD_TX --> ACTIVE : start_spi_transfer\ny bytes cargados
+
+state ACTIVE {
+    [*] --> START_BYTE
+    START_BYTE --> WAIT_BYTE : start_i al spi_pin_driver
+    WAIT_BYTE --> START_BYTE : done y quedan bytes
+    WAIT_BYTE --> [*] : done del ultimo byte
+}
+
+ACTIVE --> INTER_FRAME_WAIT : ultimo byte terminado\nNSS vuelve a 1
+INTER_FRAME_WAIT --> DONE : pausa cumplida
+DONE --> IDLE : pulso done
+
+note right of ACTIVE
+  NSS permanece en 0 durante toda la trama.
+  Cada respuesta se escribe en la RAM RX.
+end note
+@enduml

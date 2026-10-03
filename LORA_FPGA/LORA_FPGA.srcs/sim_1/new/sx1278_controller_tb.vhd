@@ -46,11 +46,14 @@ architecture Behavioral of sx1278_controller_tb is
 
     -- Input signals
     signal config_wr_ena_i : std_logic := '0';
-    signal config_addr_i   : std_logic_vector(4-1 downto 0) := (others=>'0');
+    signal config_addr_i   : std_logic_vector(8-1 downto 0) := (others=>'0');
     signal config_data_i   : std_logic_vector(8-1 downto 0) := (others=>'0');
-    signal start_config_i  : std_logic := '0';
-    signal rst_periph_i    : std_logic := '0';
-    signal tx_data_i       : std_logic := '0';
+    signal config_start_i  : std_logic := '0';
+    signal peripheral_reset_request_i : std_logic := '0';
+    signal tx_begin_i : std_logic := '0';
+    signal tx_start_i      : std_logic := '0';
+    signal tx_data_i       : std_logic_vector(7 downto 0) := (others=>'0');
+    signal tx_data_valid_i : std_logic := '0';
     signal rx_data_i       : std_logic := '0';
     signal spi_miso_i      : std_logic := '0';
     signal sx1278_dio0_i   : std_logic := '0';
@@ -65,6 +68,7 @@ architecture Behavioral of sx1278_controller_tb is
     signal sx1278_reset_o  : std_logic;
 
     signal checked_frames : integer range 0 to 15 := 0;
+    signal tx_command_sent : std_logic := '0';
 
     type t_expected_frames is array (0 to 15-1) of
         std_logic_vector(16-1 downto 0);
@@ -89,10 +93,21 @@ begin
             config_wr_ena_i   => config_wr_ena_i,
             config_addr_i     => config_addr_i,
             config_data_i     => config_data_i,
-            start_config_i    => start_config_i,
-            rst_periph_i      => rst_periph_i,
+            config_start_i    => config_start_i,
+            tx_start_i        => tx_start_i,
+            peripheral_reset_request_i => peripheral_reset_request_i,
+            tx_begin_i => tx_begin_i,
             tx_data_i         => tx_data_i,
-            rx_data_i         => rx_data_i,
+            tx_data_valid_i   => tx_data_valid_i,
+            rx_start_i        => '0',
+            rx_read_index_i   => (others=>'0'),
+            rx_data_o         => open,
+            rx_length_o       => open,
+            rx_valid_o        => open,
+            rx_packet_pending_o => open,
+            rx_stream_index_i => (others=>'0'),
+            rx_stream_data_o  => open,
+            rx_packet_sent_i  => '0',
             busy_o            => busy_o,
             done_o            => done_o,
             error_o           => error_o,
@@ -101,7 +116,8 @@ begin
             spi_miso_i        => spi_miso_i,
             spi_nss_o         => spi_nss_o,
             sx1278_dio0_i     => sx1278_dio0_i,
-            sx1278_reset_o    => sx1278_reset_o
+            sx1278_reset_o    => sx1278_reset_o,
+            peripheral_reset_active_o => open
         );
 
     -- Clock process
@@ -111,6 +127,51 @@ begin
         wait for clk_period/2;
         clk<='1';
         wait for clk_period/2;
+    end process;
+
+    -- Verifica la secuencia TX y, en particular, que direccion FIFO y los
+    -- tres bytes de payload se transmitan dentro de una unica ventana NSS.
+    tx_spi_monitor : process
+        procedure check_spi_frame(
+            constant expected_frame : std_logic_vector
+        ) is
+            variable received_frame : std_logic_vector(expected_frame'range);
+        begin
+            wait until falling_edge(spi_nss_o);
+
+            for bit_index in expected_frame'range loop
+                wait until rising_edge(spi_sclk_o);
+                received_frame(bit_index):=spi_mosi_o;
+            end loop;
+
+            wait until rising_edge(spi_nss_o);
+            assert received_frame=expected_frame
+                report "Frame SPI de transmision incorrecto"
+                severity error;
+        end procedure;
+    begin
+        wait until checked_frames=15;
+        check_spi_frame(x"8189");
+        report "TX_BEGIN: STDBY verificado" severity note;
+        check_spi_frame(x"8D00");
+        report "TX_BEGIN: puntero FIFO verificado" severity note;
+        check_spi_frame(x"80A5");
+        report "TX_WRITE: A5 verificado" severity note;
+        check_spi_frame(x"8096");
+        report "TX_WRITE: 96 verificado" severity note;
+        check_spi_frame(x"8081");
+        report "TX_WRITE: 81 verificado" severity note;
+        check_spi_frame(x"A203");
+        report "TX_START: longitud verificada" severity note;
+        check_spi_frame(x"92FF");
+        report "TX_START: IRQ limpiadas" severity note;
+        check_spi_frame(x"C040");
+        report "TX_START: DIO0 configurado" severity note;
+        check_spi_frame(x"818B");
+        report "TX_START: modo TX verificado" severity note;
+        tx_command_sent<='1';
+        check_spi_frame(x"9208");
+        wait;
     end process;
 
     -- Reset process
@@ -162,6 +223,22 @@ begin
             wait until falling_edge(clk);
             config_wr_ena_i<='0';
         end procedure;
+
+        procedure send_tx_byte(
+            constant data_value : std_logic_vector(8-1 downto 0)
+        ) is
+        begin
+            wait until falling_edge(clk);
+            tx_data_i<=data_value;
+            tx_data_valid_i<='1';
+            wait until falling_edge(clk);
+            tx_data_valid_i<='0';
+            wait until done_o='1' for 20 us;
+            assert done_o='1'
+                report "La escritura del byte en la FIFO no finalizo"
+                severity error;
+            wait until falling_edge(clk);
+        end procedure;
     begin
         wait until falling_edge(rst);
 
@@ -181,9 +258,9 @@ begin
         write_config_register(CFG_TX_POWER_DBM, x"0E");
 
         wait until falling_edge(clk);
-        start_config_i<='1';
+        config_start_i<='1';
         wait until falling_edge(clk);
-        start_config_i<='0';
+        config_start_i<='0';
 
         wait until busy_o='1' for 1 us;
         assert busy_o='1'
@@ -211,7 +288,38 @@ begin
             report "done_o debe durar un unico ciclo"
             severity error;
 
-        report "Fin de la prueba de configuracion del SX1278"
+        -- Abre un payload nuevo; el manager reinicia su puntero interno.
+        tx_begin_i<='1';
+        wait until falling_edge(clk);
+        tx_begin_i<='0';
+
+        -- Cada byte se escribe mediante una trama SPI independiente.
+        send_tx_byte(x"A5");
+        send_tx_byte(x"96");
+        send_tx_byte(x"81");
+
+        wait until busy_o='0';
+        wait until falling_edge(clk);
+        tx_start_i<='1';
+        wait until falling_edge(clk);
+        tx_start_i<='0';
+
+        wait until tx_command_sent='1' for 30 us;
+        assert tx_command_sent='1'
+            report "No se transmitio el comando TX"
+            severity error;
+
+        -- DIO0 representa TxDone en la configuracion utilizada.
+        wait until falling_edge(clk);
+        sx1278_dio0_i<='1';
+
+        wait until done_o='1' for 10 us;
+        assert done_o='1'
+            report "La secuencia TX no finalizo"
+            severity error;
+        sx1278_dio0_i<='0';
+
+        report "Fin de las pruebas CONFIG y TX del SX1278"
             severity note;
         wait;
     end process;

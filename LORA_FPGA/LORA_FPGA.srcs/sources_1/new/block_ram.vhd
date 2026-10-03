@@ -38,15 +38,22 @@ entity block_ram is
         DEPTH      : integer := 512
     );
     port (
+        -- Reloj sincrono de lectura y escritura.
         clk : in std_logic;
+        -- Reset sincrono de la memoria y del registro de salida.
         rst : in std_logic;
         -- Puerto de escritura
+        -- Habilita la escritura durante el flanco ascendente.
         wr_en_i   : in std_logic;
+        -- Direccion donde se almacena wr_data_i.
         wr_addr_i : in integer range 0 to DEPTH-1;
+        -- Dato que se escribe en la memoria.
         wr_data_i : in std_logic_vector(DATA_WIDTH-1 downto 0);
 
         -- Puerto de lectura
+        -- Direccion presentada al puerto de lectura sincrono.
         rd_addr_i : in  integer range 0 to DEPTH-1;
+        -- Dato registrado obtenido de rd_addr_i.
         rd_data_o : out std_logic_vector(DATA_WIDTH-1 downto 0)
     );
 end block_ram;
