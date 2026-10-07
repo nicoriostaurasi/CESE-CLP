@@ -30,6 +30,9 @@
 # Keep generated Vivado caches out even though extension rules above are broad.
 Guia_TP/CLP_CESE/CLP_CESE.ip_user_files/
 Guia_TP/CLP_CESE/CLP_CESE.sim/
+LORA_FPGA/.Xil/
+LORA_FPGA/LORA_FPGA.runs/
+LORA_FPGA/LORA_FPGA.sim/
 
 # Temporary PDF sources and pages rendered for visual verification.
 LORA_FPGA/tmp/pdfs/

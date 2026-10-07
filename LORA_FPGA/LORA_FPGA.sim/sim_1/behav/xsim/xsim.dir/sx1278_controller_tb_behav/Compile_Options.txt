@@ -1,1 +1,0 @@
---incr --debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "secureip" --snapshot "sx1278_controller_tb_behav" "xil_defaultlib.sx1278_controller_tb" -log "elaborate.log" 
