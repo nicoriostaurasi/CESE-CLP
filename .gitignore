@@ -10,12 +10,16 @@
 !*.py
 !*.md
 !*.puml
+!*.drawio
 !*.yml
 !*.yaml
 !*.vcd
 !*.xdc
 !Makefile
 !Dockerfile
+
+# Reporte de utilizacion entregable del proyecto LoRa FPGA.
+!LORA_FPGA/doc/UtilizationReport.txt
 
 !*.jpg
 !*.coe
@@ -26,3 +30,6 @@
 # Keep generated Vivado caches out even though extension rules above are broad.
 Guia_TP/CLP_CESE/CLP_CESE.ip_user_files/
 Guia_TP/CLP_CESE/CLP_CESE.sim/
+
+# Temporary PDF sources and pages rendered for visual verification.
+LORA_FPGA/tmp/pdfs/

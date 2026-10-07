@@ -110,24 +110,6 @@ begin
     spi_miso <= spi_mosi;
 
     stimulus : process
-        procedure read_and_check_rx(constant expected_data : std_logic_vector(7 downto 0)) is
-        begin
-            wait until falling_edge(clk);
-            assert rx_ram_empty = '0'
-                report "RX RAM vacia antes de leer el byte esperado"
-                severity warning;
-            assert rx_ram_data = expected_data
-                report "Dato incorrecto leido de RX RAM"
-                severity warning;
-
-            rx_ram_read <= '1';
-            wait until rising_edge(clk);
-            rx_ram_read <= '0';
-
-            -- La RAM tiene lectura sincrona: se deja un ciclo para que la
-            -- siguiente direccion aparezca en rx_ram_data.
-            wait until rising_edge(clk);
-        end procedure;
     begin
         wait until falling_edge(rst);
         wait until falling_edge(clk);
@@ -175,101 +157,9 @@ begin
         wait until rising_edge(clk);
         start_spi_transfer <= '0';
 
-        -- Se comprueba medio ciclo despues para observar las asignaciones
-        -- registradas por el DUT en el flanco anterior.
-        wait until falling_edge(clk);
-        assert busy = '1'
-            report "BUSY no se activo al iniciar la trama"
-            severity warning;
-        assert spi_nss = '0'
-            report "NSS no se activo al iniciar la trama"
-            severity warning;
-
-        -- Se limita la espera para que un error en la FSM no bloquee el TB.
-        wait until done = '1' for 20 us;
-        assert done = '1'
-            report "La transferencia de cuatro bytes no finalizo"
-            severity warning;
-
-        if done = '1' then
-            wait until falling_edge(clk);
-            assert busy = '0'
-                report "BUSY no se libero al finalizar la trama"
-                severity warning;
-            assert spi_nss = '1'
-                report "NSS no volvio a reposo al finalizar la trama"
-                severity warning;
-
-            -- En loopback, la RX RAM debe conservar la misma trama enviada.
-            read_and_check_rx(x"A5");
-            read_and_check_rx(x"81");
-            read_and_check_rx(x"96");
-            read_and_check_rx(x"3C");
-
-            wait until falling_edge(clk);
-            assert rx_ram_empty = '1'
-                report "RX RAM no quedo vacia luego de cuatro lecturas"
-                severity warning;
-        end if;
-
-        -- Segunda trama, sin reset entre transferencias, para comprobar que
-        -- el controlador pueda reutilizarse.
-        wait for 200 ns;
-
-        wait until rising_edge(clk);
-        byte_i <= x"0F";
-        charge_byte <= '1';
-        wait until rising_edge(clk);
-        charge_byte <= '0';
-
-        wait for 200 ns;
-
-        wait until rising_edge(clk);
-        byte_i <= x"F0";
-        charge_byte <= '1';
-        wait until rising_edge(clk);
-        charge_byte <= '0';
-
-        wait for 200 ns;
-
-        wait until rising_edge(clk);
-        start_spi_transfer <= '1';
-        wait until rising_edge(clk);
-        start_spi_transfer <= '0';
-
-        wait until falling_edge(clk);
-        assert busy = '1'
-            report "BUSY no se activo al iniciar la segunda trama"
-            severity warning;
-        assert spi_nss = '0'
-            report "NSS no se activo al iniciar la segunda trama"
-            severity warning;
-
-        wait until done = '1' for 20 us;
-        assert done = '1'
-            report "La segunda transferencia no finalizo"
-            severity warning;
-
-        if done = '1' then
-            wait until falling_edge(clk);
-            assert busy = '0'
-                report "BUSY no se libero al finalizar la segunda trama"
-                severity warning;
-            assert spi_nss = '1'
-                report "NSS no volvio a reposo al finalizar la segunda trama"
-                severity warning;
-
-            read_and_check_rx(x"0F");
-            read_and_check_rx(x"F0");
-
-            wait until falling_edge(clk);
-            assert rx_ram_empty = '1'
-                report "RX RAM no quedo vacia luego de la segunda trama"
-                severity warning;
-        end if;
-
-        wait for 100 ns;
-        report "Fin de las transmisiones de spi_frame_controller" severity note;
+        -- BUSY, DONE, NSS, RAM RX y reutilizacion se comprueban en Cocotb.
+        wait for 20 us;
+        std.env.stop;
         wait;
     end process;
 

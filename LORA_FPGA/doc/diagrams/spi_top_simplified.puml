@@ -1,0 +1,22 @@
+@startuml
+title SPI controller
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam ranksep 75
+skinparam nodesep 50
+skinparam state {
+  BackgroundColor #FFEDD5
+  BorderColor #EA580C
+  FontColor #172033
+  ArrowColor #64748B
+}
+
+state "EJECUTAR\nTRANSACCIÓN SPI" as EJECUTAR_SPI
+
+[*] -right-> IDLE
+IDLE -right-> EJECUTAR_SPI : sequence_request
+EJECUTAR_SPI --> EJECUTAR_SPI : step < last_step\nstep = step + 1
+EJECUTAR_SPI -down-> DONE : step = last_step
+DONE -left-> [*]
+
+@enduml

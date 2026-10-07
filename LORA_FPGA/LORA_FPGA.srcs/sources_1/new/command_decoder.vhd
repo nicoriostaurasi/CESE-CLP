@@ -112,8 +112,7 @@ architecture Behavioral of command_decoder is
     -- MEF de recepción de comandos. Primero encuadra los seis bytes de la
     -- solicitud; sólo después de recibir el delimitador final pasa a DECODE.
     -- Si el controlador esta ocupado, DECODE responde NACK para que el host
-    -- reintente posteriormente. Diagrama:
-    -- doc/diagrams/command_decoder_fsm.puml
+    -- reintente posteriormente.
     type t_state is (
         ST_WAIT_START,
         ST_WAIT_COMMAND,

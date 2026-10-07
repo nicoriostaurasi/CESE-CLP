@@ -67,7 +67,7 @@ architecture Behavioral of spi_sequence_controller is
     -- Recorre una secuencia sin conocer su contenido. step_o selecciona el
     -- frame externo y last_step_i determina cuándo termina. El índice avanza
     -- únicamente después de access_done para no sobrescribir una operación
-    -- todavía activa. Diagrama: doc/diagrams/spi_sequence_fsm.puml
+    -- todavía activa.
     type t_state is (ST_IDLE, ST_START_ACCESS, ST_WAIT_ACCESS, ST_DONE);
 
     signal state_now : t_state;

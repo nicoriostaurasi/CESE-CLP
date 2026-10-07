@@ -63,8 +63,7 @@ architecture Behavioral of spi_register_access is
 
     -- Adapta una operación lógica de dos bytes al protocolo del frame
     -- controller. Para lecturas se descarta el byte simultáneo a la dirección
-    -- y se conserva el recibido durante el byte dummy. Diagrama:
-    -- doc/diagrams/spi_register_access_fsm.puml
+    -- y se conserva el recibido durante el byte dummy.
     type t_state is (ST_IDLE, ST_LOAD_FIRST, ST_LOAD_SECOND,
                      ST_START_FRAME, ST_WAIT_FRAME,
                      ST_SKIP_FIRST_RX, ST_WAIT_SECOND_RX,

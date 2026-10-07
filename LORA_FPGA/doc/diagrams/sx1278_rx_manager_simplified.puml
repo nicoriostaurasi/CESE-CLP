@@ -1,0 +1,26 @@
+@startuml
+title RX manager
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam ranksep 55
+skinparam nodesep 40
+skinparam state {
+  BackgroundColor #EDE9FE
+  BorderColor #7C3AED
+  FontColor #172033
+  ArrowColor #64748B
+}
+
+[*] -right-> IDLE
+IDLE -right-> CONFIGURAR_RX : start_rx
+CONFIGURAR_RX -down-> ESPERAR_PAQUETE : secuencia lista
+ESPERAR_PAQUETE --> ESPERAR_PAQUETE : CRC incorrecto\nrearmar RX
+ESPERAR_PAQUETE -left-> LEER_METADATOS : DIO0 / CRC correcto
+LEER_METADATOS -right-> ESPERAR_PAQUETE : longitud = 0
+LEER_METADATOS -down-> LEER_FIFO : longitud > 0
+LEER_FIFO --> LEER_FIFO : queda otro byte
+LEER_FIFO -right-> LIMPIAR_IRQ : último byte
+LIMPIAR_IRQ -right-> PAQUETE_LISTO
+PAQUETE_LISTO -down-> [*]
+
+@enduml

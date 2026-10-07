@@ -84,8 +84,7 @@ end spi_frame_controller;
 
 architecture Behavioral of spi_frame_controller is
     -- Este bloque no utiliza una MEF enumerada: el flujo se representa con
-    -- writing_flag e inter_frame_waiting. El diagrama equivalente se encuentra
-    -- en doc/diagrams/spi_frame_controller_flow.puml.
+    -- writing_flag e inter_frame_waiting.
     -- Cantidad de bits necesaria para direccionar la RAM configurada.
     constant N_RAM_ADDR : integer := integer(ceil(log2(real(RAM_DEPTH))));
     constant INTER_FRAME_DELAY_CYCLES : integer :=
@@ -95,15 +94,17 @@ architecture Behavioral of spi_frame_controller is
 
     -- Memoria y control de la trama a transmitir. Se separan los punteros de
     -- carga y lectura para poder preparar el frame antes de activar NSS.
-    signal tx_wr_addr : unsigned(N_RAM_ADDR-1 downto 0);
-    signal tx_rd_addr : unsigned(N_RAM_ADDR-1 downto 0);
+    -- La inicializacion evita conversiones to_integer sobre valores U durante
+    -- la elaboracion, antes de que el primer flanco de reset sea aplicado.
+    signal tx_wr_addr : unsigned(N_RAM_ADDR-1 downto 0) := (others=>'0');
+    signal tx_rd_addr : unsigned(N_RAM_ADDR-1 downto 0) := (others=>'0');
     signal byte_data_counter : unsigned(N_RAM_ADDR-1 downto 0);
     signal tx_ram_data : std_logic_vector(8-1 downto 0);
 
     -- Memoria y control de los bytes recibidos. SPI es full-duplex, por lo que
     -- se conserva un byte RX por cada byte TX aunque el acceso sea escritura.
-    signal rx_wr_addr : unsigned(N_RAM_ADDR-1 downto 0);
-    signal rx_rd_addr : unsigned(N_RAM_ADDR-1 downto 0);
+    signal rx_wr_addr : unsigned(N_RAM_ADDR-1 downto 0) := (others=>'0');
+    signal rx_rd_addr : unsigned(N_RAM_ADDR-1 downto 0) := (others=>'0');
     signal rx_data_counter : unsigned(N_RAM_ADDR-1 downto 0);
     signal rx_ram_data : std_logic_vector(8-1 downto 0);
     signal rx_read_enable : std_logic;

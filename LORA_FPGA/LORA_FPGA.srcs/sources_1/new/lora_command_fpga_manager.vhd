@@ -126,7 +126,6 @@ architecture Behavioral of lora_command_fpga_manager is
 
 begin
 
-    -- Diagrama de interconexion: doc/diagrams/architecture.puml
     uart_interface : entity work.myUart
         generic map (
             baudRate => UART_BAUDRATE,

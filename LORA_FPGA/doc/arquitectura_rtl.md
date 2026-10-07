@@ -256,23 +256,13 @@ entornos y scoreboards para SPI, UART, SX1278 y el top completo.
 
 ## Diagramas PlantUML
 
-Los archivos fuente de los diagramas se mantienen junto con la documentación
-para que puedan actualizarse al modificar una MEF:
+Los archivos fuente utilizados por la presentación se mantienen junto con la
+documentación para que puedan actualizarse al modificar el diseño:
 
-- [`architecture.puml`](diagrams/architecture.puml): interconexión del sistema.
-- [`command_decoder_fsm.puml`](diagrams/command_decoder_fsm.puml): recepción,
-  validación y ejecución de comandos UART.
-- [`uart_serializer_fsm.puml`](diagrams/uart_serializer_fsm.puml): respuestas y
-  envío automático de paquetes recibidos.
-- [`sx1278_controller_fsm.puml`](diagrams/sx1278_controller_fsm.puml): operaciones
-  CONFIG, TX y RX del transceptor.
-- [`spi_sequence_fsm.puml`](diagrams/spi_sequence_fsm.puml): ejecución de una
-  lista de accesos SPI.
-- [`spi_register_access_fsm.puml`](diagrams/spi_register_access_fsm.puml): acceso
-  de lectura o escritura a un registro.
-- [`spi_frame_controller_flow.puml`](diagrams/spi_frame_controller_flow.puml):
-  carga de RAM, transferencia byte a byte y pausa entre tramas.
+- [`command_decoder_simplified.puml`](diagrams/command_decoder_simplified.puml).
+- [`spi_top_simplified.puml`](diagrams/spi_top_simplified.puml).
+- [`sx1278_config_manager_simplified.puml`](diagrams/sx1278_config_manager_simplified.puml).
+- [`sx1278_rx_manager_simplified.puml`](diagrams/sx1278_rx_manager_simplified.puml).
+- [`sx1278_tx_manager_simplified.puml`](diagrams/sx1278_tx_manager_simplified.puml).
 
-Los comentarios ubicados junto a la declaración de cada MEF indican el
-diagrama correspondiente. PlantUML puede renderizarlos desde VS Code o con el
-comando `plantuml` sin que los archivos generados formen parte del RTL.
+Cada fuente PlantUML posee una imagen PNG homónima empleada en la documentación.

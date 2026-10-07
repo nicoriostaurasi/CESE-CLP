@@ -1,0 +1,9 @@
+services:
+  verification:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace
+    command: python verification/run.py all

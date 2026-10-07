@@ -108,21 +108,6 @@ begin
         rst <= '0';
         wait until rising_edge(clk);
 
-        for i in 0 to 3 loop
-            assert busy(i) = '0'
-                report "BUSY no esta inactivo despues del reset en modo " & integer'image(i)
-                severity warning;
-            assert done(i) = '0'
-                report "DONE no esta inactivo despues del reset en modo " & integer'image(i)
-                severity warning;
-            assert sclk(i) = cpol_values(i)
-                report "SCLK no respeta CPOL durante reposo en modo " & integer'image(i)
-                severity warning;
-            assert mosi(i) = '1'
-                report "MOSI no respeta IDLE_VALUE en modo " & integer'image(i)
-                severity warning;
-        end loop;
-
         -- Primera transferencia. Se usan tiempos fijos para poder observar
         -- las formas de onda aunque el bloque todavia este incompleto.
         tx_byte <= x"A5";
@@ -133,52 +118,9 @@ begin
         start <= '0';
         wait for 3 us;
 
-        for i in 0 to 3 loop
-            assert busy(i) = '0'
-                report "BUSY no se libero con A5 en modo " & integer'image(i)
-                severity warning;
-            assert rx_byte(i) = x"A5"
-                report "RX no recibio A5 en modo " & integer'image(i)
-                severity warning;
-        end loop;
-
-        -- Segunda transferencia para observar la reutilizacion del bloque.
-        tx_byte <= x"96";
-        wait until falling_edge(clk);
-        start <= '1';
-        wait until rising_edge(clk);
-        wait until falling_edge(clk);
-        start <= '0';
-        wait for 3 us;
-
-        for i in 0 to 3 loop
-            assert busy(i) = '0'
-                report "BUSY no se libero con 96 en modo " & integer'image(i)
-                severity warning;
-            assert rx_byte(i) = x"96"
-                report "RX no recibio 96 en modo " & integer'image(i)
-                severity warning;
-        end loop;
-
-        -- Tercera transferencia con un patron simetrico al invertir bits.
-        tx_byte <= x"81";
-        wait until falling_edge(clk);
-        start <= '1';
-        wait until rising_edge(clk);
-        wait until falling_edge(clk);
-        start <= '0';
-        wait for 3 us;
-
-        for i in 0 to 3 loop
-            assert busy(i) = '0'
-                report "BUSY no se libero con 81 en modo " & integer'image(i)
-                severity warning;
-            assert rx_byte(i) = x"81"
-                report "RX no recibio 81 en modo " & integer'image(i)
-                severity warning;
-        end loop;
-
-        report "Fin de la secuencia exploratoria de spi_pin_driver" severity note;
+        -- Los cuatro modos, sus salidas y la reutilizacion se verifican en
+        -- Cocotb mediante spi_pin_driver/00-all-modes.
+        std.env.stop;
         wait;
     end process;
 

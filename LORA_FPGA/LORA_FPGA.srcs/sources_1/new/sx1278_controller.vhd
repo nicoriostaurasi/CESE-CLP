@@ -59,7 +59,7 @@ entity sx1278_controller is
         tx_start_i : in std_logic;
         -- Pulso que inicia la recepcion de un paquete.
         rx_start_i : in std_logic;
-        -- Indice para lectura aleatoria del buffer RX.
+        -- Indice para lectura del buffer RX.
         rx_read_index_i : in std_logic_vector(6-1 downto 0);
         -- Byte RX seleccionado por rx_read_index_i.
         rx_data_o : out std_logic_vector(8-1 downto 0);
