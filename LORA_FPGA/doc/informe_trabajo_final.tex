@@ -312,14 +312,6 @@ Una ejecución correcta finaliza con:
 UART verificada: CONFIG, TX y RX automatico correctos
 \end{lstlisting}
 
-La simulación puede reproducirse desde Vivado 2024.2 mediante:
-
-\begin{lstlisting}[language=bash]
-cd .\scripts
-& 'C:\Xilinx\Vivado\2024.2\bin\vivado.bat' `
-    -mode batch -source run_lora_top_tb.tcl
-\end{lstlisting}
-
 La Figura~\ref{fig:sim-top} presenta una ejecución del testbench de integración.
 Se observan la actividad UART del host, las respuestas generadas por la FPGA,
 el estado indicado por los LED y el comienzo de la actividad SPI.
@@ -333,9 +325,22 @@ el estado indicado por los LED y el comienzo de la actividad SPI.
 
 \subsection{Validación sobre hardware}
 
-Además de la simulación se verificó el bus físico mediante analizador lógico.
-La Figura~\ref{fig:config-hw} muestra la secuencia SPI de configuración y la
-Figura~\ref{fig:rx-hw} el inicio del modo de recepción.
+El diseño se implementó sobre la FPGA Zynq y se conectó a un transceptor
+SX1278. Como nodo LoRa complementario se utilizó una placa Heltec ESP32 LoRa,
+mientras que un analizador lógico permitió observar las interfaces digitales
+durante las pruebas. El montaje experimental se muestra en la
+Figura~\ref{fig:montaje-hw}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth,height=0.58\textheight,keepaspectratio]{montaje_validacion_hardware.png}
+    \caption{Montaje experimental empleado para validar el controlador LoRa implementado en la FPGA.}
+    \label{fig:montaje-hw}
+\end{figure}
+
+Además de verificar el intercambio LoRa, se observó el bus físico mediante el
+analizador lógico. La Figura~\ref{fig:config-hw} muestra la secuencia SPI de
+configuración y la Figura~\ref{fig:rx-hw} el inicio del modo de recepción.
 
 \begin{figure}[H]
     \centering
