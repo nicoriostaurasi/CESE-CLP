@@ -1,0 +1,21 @@
+@startuml
+title Command decoder
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam ranksep 90
+skinparam nodesep 55
+skinparam state {
+  BackgroundColor #DBEAFE
+  BorderColor #2563EB
+  FontColor #172033
+  ArrowColor #64748B
+}
+
+[*] -right-> ESPERAR_INICIO
+ESPERAR_INICIO -right-> RECIBIR_TRAMA : '#'
+RECIBIR_TRAMA -down-> VALIDAR : trama completa
+VALIDAR -left-> RESPONDER : válido / ACK
+VALIDAR -left-> RESPONDER : inválido u ocupado / NACK
+RESPONDER -up-> ESPERAR_INICIO : respuesta enviada
+
+@enduml

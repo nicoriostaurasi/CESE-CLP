@@ -1,0 +1,20 @@
+@startuml
+title CONFIG manager
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam ranksep 75
+skinparam nodesep 50
+skinparam state {
+  BackgroundColor #DCFCE7
+  BorderColor #15803D
+  FontColor #172033
+  ArrowColor #64748B
+}
+
+[*] -right-> IDLE
+IDLE -right-> APLICAR_CONFIG : start_config
+APLICAR_CONFIG --> APLICAR_CONFIG : siguiente registro
+APLICAR_CONFIG -down-> DONE : último registro
+DONE -left-> [*]
+
+@enduml
