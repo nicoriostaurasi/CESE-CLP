@@ -1,0 +1,24 @@
+@startuml
+title TX manager
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam ranksep 60
+skinparam nodesep 45
+skinparam state {
+  BackgroundColor #FFF2CC
+  BorderColor #D97706
+  FontColor #172033
+  ArrowColor #64748B
+}
+
+[*] -right-> IDLE
+IDLE -right-> PREPARAR_FIFO : tx_start
+PREPARAR_FIFO -down-> CARGAR_PAYLOAD : secuencia lista
+CARGAR_PAYLOAD --> CARGAR_PAYLOAD : queda otro byte
+CARGAR_PAYLOAD -left-> INICIAR_TX : último byte cargado
+INICIAR_TX -down-> ESPERAR_TX_DONE : secuencia lista
+ESPERAR_TX_DONE -right-> LIMPIAR_IRQ : flanco DIO0
+LIMPIAR_IRQ -right-> DONE : secuencia lista
+DONE -down-> [*]
+
+@enduml
